@@ -2,6 +2,14 @@ import { html, render, SlotMixin } from "@lion/core";
 import { LionSelect } from "@lion/select";
 
 class CustomSelect extends SlotMixin(LionSelect) {
+  /**
+   * Using the SlotMixin slots getter here to project
+   * some default options to the native select element.
+   * It's important that it ends up in LightDOM, which is
+   * also the DOM in which the label will be, they have to be
+   * in the same DOM for a11y: screen readers to describe
+   * the input field when focused with the label content
+   */
   get slots() {
     return {
       input: () => {
@@ -18,6 +26,10 @@ class CustomSelect extends SlotMixin(LionSelect) {
     };
   }
 
+  /**
+   * Adding the extra-options slot so the user can declare
+   * extra options
+   */
   render() {
     return html`
       ${super.render()}
