@@ -25,15 +25,36 @@ class CustomSelect extends SlotMixin(LionSelect) {
     `;
   }
 
+  /**
+   * When the slotchange event fires for extra-options
+   * we can grab its children (expected that they are <option> elements)
+   * and insert them into the native select that our custom-select is wrapping
+   */
   slotChangeHandler(ev) {
-    if (ev.target.name === "extra-options") {
-      const extraOptions = Array.from(
-        Array.from(ev.target.assignedNodes())[0].children
-      );
+    if (ev.target.assignedNodes().length > 0) {
+      const slottable = Array.from(ev.target.assignedNodes())[0];
+      if (slottable) {
+        const extraOptions = Array.from(
+          Array.from(ev.target.assignedNodes())[0].children
+        );
 
-      extraOptions.forEach((node) => {
-        this._inputNode.appendChild(node);
-      });
+        extraOptions.forEach((node) => {
+          /**
+           * We set this attribute, in case we wanna clear these later,
+           * we can filter the native select child options by attr that marks them as "extra option"
+           * and remove them from DOM if we want.
+           *
+           *  Array.from(this._inputNode.children)
+           *    .filter(child => child.hasAttribute('data-added-extra-option'))
+           *    .forEach(child => child.remove())
+           */
+          node.setAttribute("data-added-extra-option", "");
+
+          this._inputNode.appendChild(node);
+        });
+
+        slottable.remove();
+      }
     }
   }
 }
