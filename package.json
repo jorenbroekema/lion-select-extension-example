@@ -1,0 +1,19 @@
+{
+  "name": "custom-select",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "wds --open --watch --node-resolve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lion/core": "^0.18.0",
+    "@lion/select": "^0.14.1"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.17"
+  }
+}
